@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultrap.net.nz/thymeleaf/layout" layout:decorate="home_layout">
+<head>
+<meta charset="UTF-8">
+<title>Liên hệ</title>
+<style>
+</style>
+</head>
+<body>
+<div layout:fragment="page_content">
+	 	<!--Page Title-->
+    	<div class="page section-header text-center">
+			<div class="page-title">
+        		<div class="wrapper"><h1 class="page-width">Contact Us</h1></div>
+      		</div>
+		</div>
+        <!--End Page Title-->
+
+        <div class="container">
+            <div class="row">
+            <!-- Opening Hours --> 
+            	<div class="col-12 col-md-4"> 
+            		<div class="map-section__overlay"> 
+            		<h3 class="h2 text-center">Opening Hours</h3> 
+            			<div class="rte-setting text-center"> 
+            				<p> Mon - Fri, 8am - 6pm<br> Saturday, 9am - 6pm<br> Sunday, 11am - 5pm </p> 
+            			</div> 
+            		</div> 
+            	</div>
+            	<div class="col-12 col-sm-12 col-md-8 col-lg-8 mb-4">
+                	<h2>Drop Us A Line</h2>
+                    <p>Fashion Store luôn sẵn sàng lắng nghe ý kiến và phản hồi từ bạn. Hãy để lại thông tin để chúng tôi có thể hỗ trợ nhanh nhất. </p>
+                	<div class="formFeilds contact-form form-vertical">
+                	<form id="contact_form" class="contact-form">
+    					<div class="row">
+                        <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                        	<div class="form-group">
+                          	<input type="text" id="ContactFormName" name="name" placeholder="Name" value="" required="">
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                        	<div class="form-group">
+							<input type="email" id="ContactFormEmail" name="email" placeholder="Email" value="" required="">                        	
+                            </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                          <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                          	<div class="form-group">
+                            <input required="" type="tel" id="ContactFormPhone" name="phone" pattern="[0-9\-]*" placeholder="Phone Number" value="">
+                            </div>
+                          </div>
+                          <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                          	<div class="form-group">
+                            <input required="" type="text" id="ContactSubject" name="subject" placeholder="Subject" value="">
+                            </div>
+                          </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                        	<div class="form-group">
+                            <textarea required="" rows="10" id="ContactFormMessage" name="message" placeholder="Your Message"></textarea>
+                            </div>
+                        </div>  
+                      </div>
+                      <div class="row">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                            <input type="submit" class="btn" value="Send Message">
+                        </div>
+                     </div>
+						</form>
+						<div id="formMessage" style="display:none; color:green; margin-top:10px;">
+  						  Thank You! Your message has been sent.
+						</div>
+						</div>
+                		</div>
+
+            </div>
+        </div>
+	 
+</div>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const form = document.getElementById("contact_form");
+    const msg = document.getElementById("formMessage");
+
+    form.addEventListener("submit", function(e) {
+        e.preventDefault();
+        msg.style.display = "block"; 
+        form.reset();
+
+        setTimeout(() => {
+            msg.style.display = "none";
+        }, 10000);
+    });
+});
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{home_layout}">
+<head>
+<meta charset="UTF-8">
+<title>Shoping cart</title>
+</head>
+<body>
+	<div layout:fragment="page_content"
+		xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+		<div id="page-content">
+			<!--Page Title-->
+			<div class="page section-header text-center">
+				<div class="page-title">
+					<div class="wrapper">
+						<h1 class="page-width">Your cart</h1>
+						<span style="color: blue" th:text="${msg}"></span>
+					</div>
+				</div>
+			</div>
+			<!--End Page Title-->
+
+			<div class="container">
+				<div class="row">
+					<div class="col-12 col-sm-12 col-md-8 col-lg-8 main-col">
+						<form action="/updateCart" method="post" class="cart style2">
+							<table>
+								<thead class="cart__row cart__header"> 
+									<tr> 
+										<th colspan="2" class="text-center">Product</th> 
+										<th class="text-center">Price</th> 
+										<th class="text-center">Quantity</th> 
+										<th class="text-right">Total</th> 
+										<th class="text-center">Action</th> 
+									</tr> 
+								</thead>
+
+								<tbody>
+									<tr th:each="item : ${cartitems}"> 
+									<!-- 1: hidden product id --> 
+									<td style="display:none;"> 
+										<input type="hidden" name="productids[]" th:value="${item.product.productId}" /> 
+									</td> <!-- 2: hình ảnh --> 
+									<td class="cart__image-wrapper cart-flex-item"> 
+									<a href="#"> <img class="cart__image" th:src="${item.product.mainPicture}" th:alt="${item.product.productName}"> 
+									</a> 
+									</td> <!-- 3: tên + màu + size --> 
+									<td class="cart__meta small--text-left cart-flex-item"> 
+									<div class="list-view-item__title"> 
+									<a href="#" th:text="${item.product.productName}">Tên sản phẩm</a> 
+									</div> 
+									<div class="cart__meta-text"> Color: <span th:text="${item.product.colors}"></span><br> Size: <span th:text="${item.product.sizes}"></span><br> 
+									</div> 
+									</td> 
+									<!-- 4: giá --> 
+									<td class="cart__price-wrapper cart-flex-item"> $<span class="money" th:text="${item.product.price}"></span> 
+									</td> 
+									<!-- 5: số lượng --> 
+									<td class="cart__update-wrapper cart-flex-item text-right"> 
+									<input class="cart__qty-input qty" type="text" name="quantities[]" th:value="${item.quantity}"> 
+									</td> <!-- 6: tổng tiền + nút remove --> 
+									<td class="text-right small--hide cart-price"> 
+    								<div>$<span class="money" th:text="${item.total}"></span></div> 
+									</td>
+									<td class="text-center">
+  								  	<a th:href="@{/removeCart/{id}(id=${item.product.productId})}" 
+       								class="btn btn--secondary cart__remove">Remove</a>
+									</td>
+									</tr>
+								</tbody>
+
+								<tfoot>
+									<tr>
+										<td colspan="3" class="text-left"><a href="/shop"
+											class="btn--link cart-continue"><i
+												class="icon icon-arrow-circle-left"></i> Continue shopping</a></td>
+									</tr>
+								</tfoot>
+							</table>
+						</form>
+					</div>
+					<div class="col-12 col-sm-12 col-md-4 col-lg-4 cart__footer">
+						<form action="/checkout" method="post">
+							<div class="cart-note">
+								<div sec:authorize="isAuthenticated()" th:remove="tag">
+									<div class="solid-border">
+										<h3>INFORMATION RECEIVER</h3>
+										<label>FullName</label><input type="text"
+											th:value="${#authentication.principal.fullName}"
+											name="receiveName" /> <label>Address</label><input
+											type="text" th:value="${#authentication.principal.address}"
+											name="receiveAddress" /> <label>Phone</label><input
+											type="text" th:value="${#authentication.principal.phone}"
+											name="receivePhone" /> <label>Note</label><input type="text"
+											name="note" />
+									</div>
+
+									<div class="solid-border">
+										<div class="row">
+											<span class="col-12 col-sm-6 cart__subtotal-title"><strong>Subtotal</strong></span>
+											<span
+												class="col-12 col-sm-6 cart__subtotal-title cart__subtotal text-right">$<span
+												class="money" th:text="${totalCart}"></span></span>
+										</div>
+										<div class="cart__shipping">Shipping &amp; taxes
+											calculated at checkout</div>
+										<p class="cart_tearm">
+											<label> <input type="checkbox" name="tearm"
+												id="cartTearm" class="checkbox" value="tearm" required="">
+												I agree with the terms and conditions
+											</label>
+										</p>
+										<input type="submit" name="checkout" id="cartCheckout"
+											class="btn btn--small-wide checkout" value="Checkout">
+										<div class="paymnet-img">
+											<img src="assets/images/payment-img.jpg" alt="Payment">
+										</div>
+									</div>
+								</div>
+								<div sec:authorize="isAnonymous()" th:remove="tag">
+									<div class="solid-border">
+										<div class="row">
+											<span class="col-12 col-sm-6 cart__subtotal-title"><strong>Subtotal</strong></span>
+											<span
+												class="col-12 col-sm-6 cart__subtotal-title cart__subtotal text-right">$<span
+												class="money" th:text="${totalCart}"></span></span>
+										</div>
+										<div class="cart__shipping">Shipping &amp; taxes
+											calculated at checkout</div>
+										<p class="cart_tearm">
+											<label> <input type="checkbox" name="tearm"
+												id="cartTearm" class="checkbox" value="tearm" required="">
+												I agree with the terms and conditions
+											</label>
+										</p>
+										<a href="/login" id="cartCheckout"
+											class="btn btn--small-wide checkout">Checkout</a>
+										<div class="paymnet-img">
+											<img src="assets/images/payment-img.jpg" alt="Payment">
+										</div>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{home_layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Thêm / Sửa sản phẩm</title>
+</head>
+<body>
+<div layout:fragment="page_content">
+    <div id="page-content">
+        <!--Page Title-->
+        <div class="page section-header text-center">
+            <div class="page-title">
+                <div class="wrapper">
+                    <h1 class="page-width" 
+                        th:text="${#strings.isEmpty(product.productId) ? 'Thêm sản phẩm' : 'Sửa sản phẩm'}"></h1>
+                </div>
+            </div>
+        </div>
+        <!--End Page Title-->
+
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-sm-12 col-md-8 col-lg-8 main-col">
+                    <form th:action="${#strings.isEmpty(product.productId) ? '/admin/add' : '/admin/edit'}"
+                          th:object="${product}" method="post" class="cart style2">
+
+                        <!-- Nhập thủ công ID sản phẩm -->
+                        <div class="mb-3">
+                            <label class="form-label">Mã sản phẩm (ID)</label>
+                            <input type="text" class="form-control" th:field="*{productId}" 
+                                   placeholder="Ví dụ: p001" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Tên sản phẩm</label>
+                            <input type="text" class="form-control" th:field="*{productName}" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Giá</label>
+                            <input type="number" step="0.01" class="form-control" th:field="*{price}" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Mô tả</label>
+                            <textarea class="form-control" th:field="*{description}"></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-success">Lưu</button>
+                        <a href="/admin" class="btn btn-secondary">Quay lại</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

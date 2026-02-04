@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{home_layout}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${blog.title}">Chi tiết Blog</title>
+</head>
+<body>
+<div layout:fragment="page_content">
+    <div class="container">
+        <h1 th:text="${blog.title}"></h1>
+        <p><strong>Tác giả:</strong>
+            <span th:text="${blog.account != null ? blog.account.username : 'Ẩn danh'}"></span>
+        </p>
+        <p><strong>Ngày đăng:</strong>
+            <span th:text="${#temporals.format(blog.createDate, 'dd/MM/yyyy')}"></span>
+        </p>
+        <div th:text="${blog.content}"></div>
+
+        <!-- Danh sách bình luận -->
+        <h3>Bình luận</h3>
+        <div th:if="${blog.comments != null}">
+            <div th:each="comment : ${blog.comments}">
+                <p>
+                    <strong th:text="${comment.account != null ? comment.account.username : 'Ẩn danh'}"></strong>:
+                    <span th:text="${comment.content}"></span>
+                </p>
+            </div>
+        </div>
+
+        <!-- Form thêm bình luận -->
+        <form th:action="@{/blogs/{id}/comment(id=${blog.blogId})}" method="post">
+            <textarea name="content" placeholder="Viết bình luận..." required></textarea>
+            <button type="submit" class="btn btn-secondary">Gửi bình luận</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

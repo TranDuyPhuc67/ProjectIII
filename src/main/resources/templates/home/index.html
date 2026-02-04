@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultrap.net.nz/thymeleaf/layout" layout:decorate="home_layout">
+<head>
+<meta charset="UTF-8">
+<title>Trang chủ</title>
+</head>
+<body>
+<div layout:fragment="page_content">
+	<div th:replace="~{home/fragments/weekly_bestseller::weekly_bestseller(${top5})}"></div>
+</div>
+</body>
+</html>

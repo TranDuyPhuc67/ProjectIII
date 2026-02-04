@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="home_layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Blog</title>
+</head>
+<body>
+<div layout:fragment="page_content">
+
+    <!-- Page Title -->
+    <div class="page section-header text-center mb-0">
+        <div class="page-title">
+            <div class="wrapper"><h1 class="page-width">Blog</h1></div>
+        </div>
+    </div>
+
+    <!-- Breadcrumb -->
+    <div class="bredcrumbWrap">
+        <div class="container breadcrumbs">
+            <a href="/" title="Back to the home page">Home</a>
+            <span aria-hidden="true">›</span><span>Blog</span>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+
+            <!-- Sidebar -->
+            <div class="col-md-3 sidebar">
+                <!-- Recent Posts -->
+                <div class="sidebar_widget">
+                    <div class="widget-title"><h2>Recent Posts</h2></div>
+                    <div class="widget-content">
+                        <div th:each="blog : ${recentBlogs}">
+                            <a th:href="@{/blogs/{id}(id=${blog.blogId})}" th:text="${blog.title}"></a>
+                            <br/>
+                            <time th:text="${#temporals.format(blog.createDate, 'dd/MM/yyyy')}"></time>
+                            <hr/>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Comments -->
+                <div class="sidebar_widget">
+                    <div class="widget-title"><h2>Recent Comments</h2></div>
+                    <div class="widget-content">
+                        <div th:each="comment : ${recentComments}">
+                            <strong th:if="${comment.account != null}" th:text="${comment.account.username}"></strong>
+                            on <a th:href="@{/blogs/{id}(id=${comment.blog.blogId})}" th:text="${comment.blog.title}"></a>
+                            <p th:text="${comment.content}"></p>
+                            <hr/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Sidebar -->
+
+            <!-- Main Content -->
+            <div class="col-md-9 main-col">
+
+                <!-- Search Form -->
+                <div class="custom-search mb-4">
+                    <form th:action="@{/blogs}" method="get" class="input-group">
+                        <input type="search" name="q" placeholder="Tìm kiếm bài viết..." class="form-control"/>
+                        <button type="submit" class="btn btn-dark"><i class="anm anm-search-l"></i></button>
+                    </form>
+                </div>
+
+                <!-- Blog List -->
+                <div class="blog--list-view">
+                    <div th:each="blog : ${blogs}" class="article mb-4 p-3 border rounded">
+    <!-- Tiêu đề có link sang chi tiết -->
+    <h2 class="h4">
+        <a th:href="@{/blogs/{id}(id=${blog.blogId})}" th:text="${blog.title}"></a>
+    </h2>
+
+    <!-- Nội dung tóm tắt -->
+    <p th:text="${blog.content}"></p>
+
+    <a th:href="@{/blogs/{id}(id=${blog.blogId})}">
+        <img th:src="${blog.image}" th:alt="${blog.title}" class="img-fluid"/>
+    </a>
+
+    <div class="text-muted">
+        <span th:if="${blog.account != null}" th:text="${blog.account.username}"></span> |
+        <time th:text="${#temporals.format(blog.createDate, 'dd/MM/yyyy')}"></time> |
+        <span th:text="${#lists.size(blog.comments)} + ' comments'"></span>
+    </div>
+</div>
+
+                </div>
+                
+                <div class="pagination"> 
+                <ul class="pagination"> 
+                <li th:if="${currentPage > 0}"> 
+                <a th:href="@{/blogs(page=${currentPage - 1}, q=${param.q})}">Previous</a> 
+                </li> <li th:each="i : ${#numbers.sequence(0, totalPages-1)}" th:classappend="${i == currentPage} ? 'active'"> 
+                <a th:href="@{/blogs(page=${i}, q=${param.q})}" th:text="${i + 1}"></a> </li> 
+                <li th:if="${currentPage < totalPages - 1}"> 
+                <a th:href="@{/blogs(page=${currentPage + 1}, q=${param.q})}">Next</a> 
+                </li> 
+                </ul> 
+                </div>
+
+
+				<!-- Add Blog Form -->
+                <div class="add-blog-form mb-4">
+                    <h3>Đăng bài viết thời trang</h3>
+                    <form th:action="@{/blogs/add}" method="post" enctype="multipart/form-data">
+   					 <input type="text" name="title" placeholder="Tiêu đề" required class="form-control mb-2"/>
+   					 <textarea name="content" placeholder="Nội dung" required class="form-control mb-2"></textarea>
+ 					 <input type="file" name="imageFile" class="form-control mb-2"/>
+  					 <button type="submit" class="btn btn-primary">Đăng bài</button>
+					</form>
+
+                </div>
+          	  </div>
+            <!-- End Main Content -->
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

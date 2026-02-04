@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{home_layout}">
+<head>
+<meta charset="UTF-8">
+<title>Invoice</title>
+</head>
+<body>
+<div layout:fragment="page_content">
+    <div class="container">
+        <h2>Hóa đơn thanh toán</h2>
+        <p><strong>Mã đơn hàng:</strong> <span th:text="${order.orderId}"></span></p>
+        <p><strong>Ngày đặt hàng:</strong> <span th:text="${order.orderDate}"></span></p>
+        <p><strong>Ngày nhận hàng dự kiến:</strong> <span th:text="${order.receivedate}"></span></p>
+        <p><strong>Người nhận:</strong> <span th:text="${order.receiveName}"></span></p>
+        <p><strong>Địa chỉ:</strong> <span th:text="${order.receiveAddress}"></span></p>
+        <p><strong>Số điện thoại:</strong> <span th:text="${order.receivePhone}"></span></p>
+        <p><strong>Tổng tiền:</strong> $<span th:text="${order.total}"></span></p>
+        <p><strong>Ghi chú:</strong> <span th:text="${order.note}"></span></p>
+		<p><strong>Trạng thái:</strong> <span th:switch="${order.status}"> 
+		<span th:case="0">Chưa nhận hàng</span> 
+		<span th:case="1">Đã nhận hàng</span> </span> 
+		</p>
+        <h3>Chi tiết sản phẩm</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Sản phẩm</th>
+                    <th>Số lượng</th>
+                    <th>Giá</th>
+                    <th>Tổng</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="item : ${items}">
+                    <td th:text="${item.product.productName}"></td> 
+                    <td th:text="${item.product.price}"></td>
+                    <td th:text="${item.price}"></td>
+                    <td th:text="${item.total}"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <a href="/shop" class="btn btn-primary">Tiếp tục mua hàng</a>
+    </div>
+</div>
+</body>
+</html>

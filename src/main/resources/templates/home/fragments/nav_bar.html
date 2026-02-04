@@ -1,0 +1,104 @@
+<div th:fragment="nav_bar" class="header-wrap animated d-flex border-bottom">
+<div class="container-fluid">        
+            <div class="row align-items-center">
+            	<!--Desktop Logo-->
+                <div class="logo col-md-2 col-lg-2 d-none d-lg-block">
+                    <a href="/">
+                    	<img src="assets/images/logo-thoi-trang.jpg" 
+   					  alt="Best Store" 
+   					  title="Best Store" 
+    				  style="max-width:120px; height:auto;" />
+                    </a>
+                </div>
+                <!--End Desktop Logo-->
+                <div class="col-2 col-sm-3 col-md-3 col-lg-8">
+                	<div class="d-block d-lg-none">
+                        <button type="button" class="btn--link site-header__menu js-mobile-nav-toggle mobile-nav--open">
+                        	<i class="icon anm anm-times-l"></i>
+                            <i class="anm anm-bars-r"></i>
+                        </button>
+                    </div>
+                	<!--Desktop Menu-->
+                	<nav class="grid__item" id="AccessibleNav"><!-- for mobile -->
+                        <ul id="siteNav" class="site-nav medium center hidearrow">
+                            <li class="lvl1 parent megamenu"><a href="/">Home <i class="anm anm-angle-down-l"></i></a>
+                            </li>
+                            <li class="lvl1 parent megamenu"><a href="/shop">Shop <i class="anm anm-angle-down-l"></i></a>
+                            </li>
+                        
+                        <li class="lvl1 parent dropdown"><a href="#">Pages <i class="anm anm-angle-down-l"></i></a>
+                          <ul class="dropdown">
+                          	
+                            <li><a href="/about-us" class="site-nav">About Us <span class="lbl nm_label1">New</span> </a></li>
+                            <li><a href="/contact-us" class="site-nav">Contact Us</a></li>
+                          </ul>
+                        </li>
+                        <li class="lvl1 parent dropdown"><a href="/blogs">Blog <i class="anm anm-angle-down-l"></i></a>
+                        </li>
+                        <li class="lvl1"><a href="#"><b>Buy Now!</b> <i class="anm anm-angle-down-l"></i></a></li>
+                      </ul>
+                    </nav>
+                    <!--End Desktop Menu-->
+                </div>
+                <!--Mobile Logo-->
+                <div class="col-6 col-sm-6 col-md-6 col-lg-2 d-block d-lg-none mobile-logo">
+                	<div class="logo">
+                        <a href="index.html">
+                            <img src="assets/images/logo.svg" alt="Belle Multipurpose Html Template" title="Belle Multipurpose Html Template" />
+                        </a>
+                    </div>
+                </div>
+                <!--Mobile Logo-->
+                <div class="col-4 col-sm-3 col-md-3 col-lg-2">
+                	<div class="site-cart">
+                    	<a href="#" class="site-header__cart" title="Cart">
+                        	<i class="icon anm anm-bag-l"></i>
+                            <span id="CartCount" class="site-header__cart-count" data-cart-render="item_count" th:text="${cartitems.size()}">2</span>
+                        </a>
+                        <!--Minicart Popup-->
+                        <div id="header-cart" class="block block-cart">
+                        	<ul class="mini-products-list">
+                               <li class="item" th:each="item : ${cartitems}">
+    <a class="product-image" href="#">
+        <img th:src="${item.product.pictures}" 
+             th:alt="${item.product.productName}" 
+             th:title="${item.product.productName}" />
+    </a>
+    <div class="product-details">
+        <a class="pName" href="/cart" th:text="${item.product.productName}"></a>
+        <div class="variant-cart">
+            <span th:text="${item.product.colors}"></span> / 
+            <span th:text="${item.product.sizes}"></span>
+        </div>
+        <div class="wrapQtyBtn">
+            <div class="qtyField">
+                <span class="label">Qty:</span>
+                <input type="text" th:value="${item.quantity}" class="product-form__input qty">
+            </div>
+        </div>
+        <div class="priceRow">
+            <div class="product-price">
+                $<span class="money" th:text="${item.product.price}"></span>
+            </div>
+        </div>
+    </div>
+</li>
+                               
+                            </ul>
+                            <div class="total">
+                            	<div class="total-in">
+                                	<span class="label">Cart Subtotal:</span><span class="product-price">$<span class="money" th:text="${totalCart}">000</span></span>
+                                </div>
+                                 <div class="buttonSet text-center">
+                                    <a href="/cart" class="btn btn-secondary btn--small">View Cart</a>
+                                    <a href="/cart" class="btn btn-secondary btn--small">Checkout</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!--End Minicart Popup-->
+                    </div>
+                    
+                </div>
+        	</div>
+        </div>
+    </div>

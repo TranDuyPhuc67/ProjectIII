@@ -1,0 +1,34 @@
+<div th:fragment="top_bar" class="top-header"  xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+        <div class="container-fluid">
+            <div class="row">
+            	<div class="col-10 col-sm-8 col-md-5 col-lg-4">
+                    <div class="currency-picker">
+                        <span class="selected-currency">USD</span>
+                    </div>
+                    <div class="language-dropdown">
+                        <span class="language-dd">English</span>
+                    </div>
+                    <p class="phone-no"><i class="anm anm-phone-s"></i> +84 000 000 0000</p>
+                </div>
+                <div class="col-sm-4 col-md-4 col-lg-4 d-none d-lg-none d-md-block d-lg-block">
+                	<div class="text-center"><p class="top-header_middle-text"> Vietnam Express Shipping</p></div>
+                </div>
+                <div class="col-2 col-sm-4 col-md-3 col-lg-4 text-right">
+                	<span class="user-menu d-block d-lg-none"><i class="anm anm-user-al" aria-hidden="true"></i></span>
+                   <div sec:authorize="isAuthenticated()" th:remove="tag">
+	                    <ul class="customer-links list-inline">
+							<li class="text-primary">Welcome: <span th:text="${#authentication.principal.fullName}"></span></li>
+							<li><img class="my-picture" th:src="${'/assets/images/'+ #authentication.principal.picture}" /></li>
+	                        <li><a href="/logout">Logout</a></li>
+	                    </ul>
+                	</div>
+                	<div sec:authorize="isAnonymous()" th:remove="tag">
+						 <ul class="customer-links list-inline">
+	                        <li><a href="/login">Login</a></li>
+	                        <li><a href="/register">Create Account</a></li>
+	                    </ul>
+                	</div>
+                </div>
+            </div>
+        </div>
+    </div>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultrap.net.nz/thymeleaf/layout"
+      layout:decorate="~{home_layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Đăng ký</title>
+</head>
+<body>
+<div layout:fragment="page_content">
+    <!--Page Title-->
+    <div class="page section-header text-center">
+        <div class="page-title">
+            <div class="wrapper">
+                <h1 class="page-width">Register</h1>
+            </div>
+        </div>
+    </div>
+    <!--End Page Title-->
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-sm-12 col-md-6 col-lg-6 main-col offset-md-3">
+                <div class="mb-4">
+                    <form method="post" action="/register" id="CustomerRegisterForm"
+                          accept-charset="UTF-8" class="contact-form">
+                        <div class="row">
+                            <div class="col-12">
+                            <div style="color:red" th:if="${error}" th:text="${error}"></div> 
+                            <div style="color:green" th:if="${success}" th:text="${success}"></div>
+                                <div class="form-group">
+                                    <label for="RegisterUsername">Username</label>
+                                    <input type="text" name="username" id="RegisterUsername"
+                                           placeholder="Enter username" required>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="RegisterEmail">Email</label>
+                                    <input type="email" name="email" id="RegisterEmail"
+                                           placeholder="Enter email" required>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="RegisterFullname">Full Name</label>
+                                    <input type="text" name="fullname" id="RegisterFullname"
+                                           placeholder="Enter full name">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="RegisterPhone">Phone</label>
+                                    <input type="text" name="phone" id="RegisterPhone"
+                                           placeholder="Enter phone number">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="RegisterAddress">Address</label>
+                                    <input type="text" name="address" id="RegisterAddress"
+                                           placeholder="Enter address">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="RegisterPicture">Picture</label>
+                                    <input type="text" name="picture" id="RegisterPicture"
+                                           placeholder="Profile picture URL">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="RegisterPassword">Password</label>
+                                    <input type="password" name="password" id="RegisterPassword"
+                                           placeholder="Enter password" required>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="RegisterConfirmPassword">Confirm Password</label>
+                                    <input type="password" name="confirmPassword" id="RegisterConfirmPassword"
+                                           placeholder="Confirm password" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="text-center col-12">
+                                <input type="submit" class="btn mb-3" value="Sign Up">
+                                <p class="mb-4">
+                                    Already have an account? &nbsp;
+                                    <a href="/login" id="customer_login_link">Login here</a>
+                                </p>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
