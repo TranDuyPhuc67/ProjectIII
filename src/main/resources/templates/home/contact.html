@@ -6,7 +6,7 @@
 <style>
 </style>
 </head>
-<body>
+
 <div layout:fragment="page_content">
 	 	<!--Page Title-->
     	<div class="page section-header text-center">
@@ -77,25 +77,28 @@
 
             </div>
         </div>
-	 
+	 <script th:inline="javascript">
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.getElementById("contact_form");
+            const msg = document.getElementById("formMessage");
+
+            if (!form) {
+                console.error("FORM KHONG TON TAI");
+                return;
+            }
+
+            form.addEventListener("submit", function (e) {
+                e.preventDefault();
+
+                msg.style.display = "block";
+                form.reset();
+
+                setTimeout(() => {
+                    msg.style.display = "none";
+                }, 5000);
+            });
+        });
+    </script>
 </div>
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    const form = document.getElementById("contact_form");
-    const msg = document.getElementById("formMessage");
 
-    form.addEventListener("submit", function(e) {
-        e.preventDefault();
-        msg.style.display = "block"; 
-        form.reset();
-
-        setTimeout(() => {
-            msg.style.display = "none";
-        }, 10000);
-    });
-});
-</script>
-
-
-</body>
 </html>

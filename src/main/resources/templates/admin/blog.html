@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="home_layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin - Blog Management</title>
+</head>
+<body>
+<div layout:fragment="page_content">
+
+    <!-- Page Title -->
+    <div class="page section-header text-center mb-0">
+        <div class="page-title">
+            <div class="wrapper">
+                <h1 class="page-width">Blog Management</h1>
+            </div>
+        </div>
+    </div>
+
+    <!-- Breadcrumb -->
+    <div class="bredcrumbWrap">
+        <div class="container breadcrumbs">
+            <a href="/admin">Admin</a>
+            <span aria-hidden="true">›</span><span>Blogs</span>
+        </div>
+    </div>
+
+    <div class="container mt-4">
+
+        <!-- Blog List -->
+        <div class="blog--list-view">
+
+            <div th:each="blog : ${blogs}"
+                 class="article mb-4 p-3 border rounded">
+
+                <!-- Title -->
+                <h2 class="h4">
+                    <a th:href="@{/admin/blogs/{id}(id=${blog.blogId})}"
+                       th:text="${blog.title}"></a>
+                </h2>
+
+                <!-- Image -->
+                <img th:if="${blog.image != null}"
+                     th:src="${blog.image}"
+                     class="img-fluid mb-2"
+                     style="max-height:250px; object-fit:cover"/>
+
+                <!-- Content preview -->
+                <p th:text="${#strings.abbreviate(blog.content, 200)}"></p>
+
+                <!-- Meta -->
+                <div class="text-muted mb-2">
+                    <span th:if="${blog.account != null}"
+  				  	 th:text="${blog.account.username}">
+					</span> |
+                    <time th:text="${#temporals.format(blog.createDate,'dd/MM/yyyy')}"></time>
+                </div>
+
+                <!-- Status badges -->
+                <div class="mb-2">
+                    <span class="badge bg-success"
+                          th:if="${blog.approved}">Approved</span>
+
+                    <span class="badge bg-warning text-dark"
+                          th:if="${blog.approved == false}">Pending</span>
+
+                    <span class="badge bg-primary"
+                          th:if="${blog.status}">Visible</span>
+
+                    <span class="badge bg-secondary"
+                          th:if="${blog.status == false}">Hidden</span>
+                </div>
+
+                <!-- Actions -->
+                <div class="d-flex gap-2">
+                    <a th:href="@{/admin/blogs/{id}(id=${blog.blogId})}"
+                       class="btn btn-sm btn-info">View</a>
+
+                    <a th:if="${blog.approved == false}"
+                       th:href="@{/admin/blogs/approve/{id}(id=${blog.blogId})}"
+                       class="btn btn-sm btn-success">
+                        Approve
+                    </a>
+
+                    <a th:href="@{/admin/blogs/toggle/{id}(id=${blog.blogId})}"
+                       class="btn btn-sm btn-warning">
+                        Toggle Visibility
+                    </a>
+
+                    <a th:href="@{/admin/blogs/delete/{id}(id=${blog.blogId})}"
+                       class="btn btn-sm btn-danger"
+                       onclick="return confirm('Delete this blog?')">
+                        Delete
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

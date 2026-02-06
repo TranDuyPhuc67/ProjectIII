@@ -61,9 +61,10 @@ public class HomeController {
 	}
 	@GetMapping("/shop")
 	public String shop(Model model) {
-		model.addAttribute("products", productService.getAll());
-		return "home/shop";
+	    model.addAttribute("products", productService.findActiveProducts());
+	    return "home/shop";
 	}
+
 	@GetMapping("/blog")
 	public String blog(Model model) {
 		return "home/blog";

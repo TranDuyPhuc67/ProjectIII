@@ -15,8 +15,9 @@ public class ProductService {
 		return productRepository.existsById(id);
 	}
 	public List<Product> getTop5(){
-		return productRepository.findTop5ByOrderByProductIdAsc();
+	    return productRepository.findTop5ByStatusTrueOrderByProductIdAsc();
 	}
+
 	public List<Product> getAll(){
 		return productRepository.findAll();
 	}

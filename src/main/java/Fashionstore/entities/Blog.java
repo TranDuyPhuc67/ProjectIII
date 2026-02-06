@@ -22,6 +22,11 @@ public class Blog {
 	@OneToMany(mappedBy="blog", cascade=CascadeType.ALL) 
 	private List<Comment> comments;
 
+	@Column(name = "approved", nullable = false)
+	private Boolean approved = false;
+
+	@Column(name = "status", nullable = false)
+	private Boolean status = true;
     public Integer getBlogId() { return blogId; }
     public void setBlogId(Integer blogId) { this.blogId = blogId; }
 
@@ -35,11 +40,27 @@ public class Blog {
     public void setImage(String image) { this.image = image; }
 
     public LocalDateTime getCreateDate() { return createDate; }
-    public void setCreateDate(LocalDateTime createDate) { this.createDate = createDate; }  // <-- thêm setter này
+    public void setCreateDate(LocalDateTime createDate) { this.createDate = createDate; }  
 
     public Account getAccount() { return account; }
     public void setAccount(Account account) { this.account = account; }
 
+    public Boolean getApproved() {
+        return approved;
+    }
+
+    public void setApproved(Boolean approved) {
+        this.approved = approved;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+    
     public List<Comment> getComments() { return comments; }
     public void setComments(List<Comment> comments) { this.comments = comments; }
 }

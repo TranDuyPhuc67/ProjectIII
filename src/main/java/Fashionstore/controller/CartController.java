@@ -45,6 +45,10 @@ public class CartController {
     	String username = principal.getName(); 
     	Account acc = accountRepo.findByUsername(username).orElseThrow(); 
     	List<CartItem> cartItems = cartItemRepo.findByAccount(acc); 
+    	cartItems.removeIf(item ->
+        item.getProduct() == null ||
+        item.getProduct().getProductId() == null
+    );
     	double totalCart = cartItems.stream().mapToDouble(CartItem::getTotal).sum(); 
     	model.addAttribute("cartitems", cartItems); 
     	model.addAttribute("totalCart", totalCart); 

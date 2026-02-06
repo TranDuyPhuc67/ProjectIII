@@ -48,14 +48,23 @@ public class BlogController {
 	        blogs = blogRepo.findByTitleContainingIgnoreCaseOrContentContainingIgnoreCase(
 	                    keyword, keyword, PageRequest.of(page, 10, Sort.by("createDate").descending()));
 	    } else {
-	        blogs = blogRepo.findAll(PageRequest.of(page, 10, Sort.by("createDate").descending()));
+	    	
+
+	    	blogs = blogRepo.findByStatusTrue(
+	                PageRequest.of(page, 10, Sort.by("createDate").descending())
+	            );
 	    }
 
 	    model.addAttribute("blogs", blogs.getContent());
 	    model.addAttribute("currentPage", page);
 	    model.addAttribute("totalPages", blogs.getTotalPages());
 
-	    model.addAttribute("recentBlogs", blogRepo.findTop5ByOrderByCreateDateDesc());
+	    model.addAttribute("recentBlogs",
+	            blogRepo.findByStatusTrueOrderByCreateDateDesc()
+	                    .stream()
+	                    .limit(5)
+	                    .toList());
+
 	    model.addAttribute("recentComments", commentRepo.findTop5ByOrderByCreateDateDesc());
 
 	    return "home/blog";
@@ -69,6 +78,7 @@ public class BlogController {
 		blog.setTitle(title); 
 		blog.setContent(content); 
 		blog.setCreateDate(LocalDateTime.now()); 
+		 blog.setStatus(true);
 		String username = principal.getName(); 
 		Account acc = accountRepo.findByUsername(username) .orElseThrow(() -> new RuntimeException("Account not found")); 
 		blog.setAccount(acc);
@@ -92,6 +102,7 @@ public class BlogController {
         model.addAttribute("comments", comments);
 
         return "home/blog_detail";
+        
     }
 
     @PostMapping("/blogs/{id}/comment")

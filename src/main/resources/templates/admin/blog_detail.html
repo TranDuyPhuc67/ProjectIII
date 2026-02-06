@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{home_layout}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${blog.title}">Chi tiết Blog</title>
+</head>
+<body>
+
+<div layout:fragment="page_content">
+    <div class="container mt-4">
+
+        <h1 th:text="${blog.title}"></h1>
+
+        <p>
+            <strong>Tác giả:</strong>
+            <span th:text="${blog.account != null ? blog.account.username : 'Ẩn danh'}"></span>
+        </p>
+
+        <p>
+            <strong>Ngày đăng:</strong>
+            <span th:text="${#temporals.format(blog.createDate, 'dd/MM/yyyy HH:mm')}"></span>
+        </p>
+
+        <p>
+            <strong>Trạng thái:</strong>
+            <span th:if="${blog.status != null and blog.status}"
+                  class="badge bg-success">Hiển thị</span>
+            <span th:if="${blog.status == null or !blog.status}"
+                  class="badge bg-secondary">Ẩn</span>
+        </p>
+
+        <hr>
+
+        <div th:utext="${blog.content}"></div>
+
+        <hr>
+
+        <a th:href="@{/admin/blogs}" class="btn btn-secondary">
+            ⬅ Quay lại danh sách
+        </a>
+
+    </div>
+</div>
+
+</body>
+</html>

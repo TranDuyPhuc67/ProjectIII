@@ -36,7 +36,9 @@
 								</thead>
 
 								<tbody>
-									<tr th:each="item : ${cartitems}"> 
+									<tr th:each="item : ${cartitems}"
+   									 th:if="${item.product != null and item.product.productId != null}">
+
 									<!-- 1: hidden product id --> 
 									<td style="display:none;"> 
 										<input type="hidden" name="productids[]" th:value="${item.product.productId}" /> 

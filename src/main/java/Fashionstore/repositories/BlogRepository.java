@@ -12,4 +12,8 @@ public interface BlogRepository extends JpaRepository<Blog, Integer> {
 
     Page<Blog> findAll(Pageable pageable);
     Page<Blog> findByTitleContainingIgnoreCaseOrContentContainingIgnoreCase( String title, String content, Pageable pageable);
+    List<Blog> findAllByOrderByCreateDateDesc();
+    List<Blog> findByStatusTrueOrderByCreateDateDesc();
+    Page<Blog> findByStatusTrue(Pageable pageable);
+
 }
